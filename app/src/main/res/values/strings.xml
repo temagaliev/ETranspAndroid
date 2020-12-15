@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">Остановки</string>
+    <string name="numTram">8 т</string>
+    <string name="timeTram">7 мин</string>
+    <string name="metrTram">2000 м</string>
+</resources>
