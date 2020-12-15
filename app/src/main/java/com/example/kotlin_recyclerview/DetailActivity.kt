@@ -72,11 +72,8 @@ class DetailActivity : AppCompatActivity() {
 
 
     fun getData() {
-
-
         thread {
             try {
-
                 val document = Jsoup.connect(url).get()
                 val element = document.select("div")
                 val newElement = element.toString()
@@ -84,8 +81,7 @@ class DetailActivity : AppCompatActivity() {
                 var timeTranText = ""
                 var meterTranText = ""
 
-
-                val norm = newElement
+                val replaceElement = newElement
                     .replace("<div style=\"width: 3em;display:inline-block;text-align:center;\">", "")
                     .replace("<div style=\"width: 4em;display:inline-block;text-align:right;\">", "")
                     .replace("<div style=\"width: 5em;display:inline-block;text-align:right;\">", "")
@@ -110,51 +106,49 @@ class DetailActivity : AppCompatActivity() {
                     .replace(" ", "")
 
 
-                var rw = ""
+                var sortedDataArray = ""
 
 
-                for (i in 0..norm.length - 1) {
-                    if (norm[i] == '♕') {
-                        rw = norm.removeRange(0,i)
+                for (i in 0..replaceElement.length - 1) {
+                    if (replaceElement[i] == '♕') {
+                        sortedDataArray = replaceElement.removeRange(0,i)
                     }
-
                 }
 
+                for (i in 0..sortedDataArray.length) {
 
-                for (i in 0..rw.length) {
-
-                    Log.d("Check", rw[i].toString())
-                    if (rw[i] == 'ъ') {
+                    Log.d("Check", sortedDataArray[i].toString())
+                    if (sortedDataArray[i] == 'ъ') {
                         Log.d("rw[i] == 'ъ'", "true")
                         var currentCount = 1
                         var text = ""
-                        while (rw[i + currentCount] != 'й') {
-                            text = text + rw[i + currentCount]
+                        while (sortedDataArray[i + currentCount] != 'й') {
+                            text = text + sortedDataArray[i + currentCount]
                             currentCount = currentCount + 1
                         }
                         numberTranText = text + " т"
                         Log.d("numberTranText", numberTranText)
-                    } else if (rw[i] == 'й') {
+                    } else if (sortedDataArray[i] == 'й') {
                         Log.d("rw[i] == 'й'", "true")
                         var currentCount = 1
                         var text = ""
-                        while (rw[i + currentCount] != 'ё') {
-                            text = text + rw[i + currentCount]
+                        while (sortedDataArray[i + currentCount] != 'ё') {
+                            text = text + sortedDataArray[i + currentCount]
                             currentCount = currentCount + 1
                         }
                         timeTranText = text + " мин"
                         Log.d("timeTranText", timeTranText)
-                    } else if (rw[i] == 'ё') {
+                    } else if (sortedDataArray[i] == 'ё') {
                         Log.d("rw[i] == 'ё'", "true")
                         var currentCount = 1
                         var text = ""
-                        while (rw[i + currentCount] != 'ь') {
-                            text = text + rw[i + currentCount]
+                        while (sortedDataArray[i + currentCount] != 'ь') {
+                            text = text + sortedDataArray[i + currentCount]
                             currentCount = currentCount + 1
                         }
                         meterTranText = text + " м"
                         Log.d("meterTranText", meterTranText)
-                    } else if (rw[i] == '♘') {
+                    } else if (sortedDataArray[i] == '♘') {
                         break
                     }
                     if (meterTranText != "") {
@@ -164,7 +158,6 @@ class DetailActivity : AppCompatActivity() {
                     }
 
                 }
-
 
             } catch (e: IOException) {
                 //e.printStackTrace()
